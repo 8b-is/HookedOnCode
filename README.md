@@ -1,22 +1,41 @@
-# Claude Code Ollama/LM Studio Code Suggestions Hook
+# HookedOnCode - AI Code Review Hooks for Claude Code
 
-This hook automatically analyzes code after it's written using Claude Code's Write, Edit, or MultiEdit tools and provides suggestions for improvements using a local LLM instance (Ollama or LM Studio).
+Automatically analyze code after it's written using Claude Code's Write, Edit, or MultiEdit tools. Get AI-powered suggestions for improvements using your choice of OpenRouter, LM Studio, or Ollama.
+
+**Includes bonus flirty code review mode with SwallowMaid/Vax personality!** 💋
 
 ## Prerequisites
 
-Choose one of the following LLM backends:
+Choose **ONE** of the following LLM backends:
 
-### Option 1: Ollama
-1. **Ollama installed and running**: Make sure Ollama is installed and accessible at `http://localhost:11434`
-2. **Code model available**: Pull a coding model like CodeLlama:
+### Option 1: OpenRouter (Easiest - No Local Setup!)
+1. **Get an API key**: Sign up at https://openrouter.ai/keys
+2. **Set environment variable**: Add to your `~/.bashrc` or `~/.zshrc`:
+   ```bash
+   export OPENROUTER_API_KEY="your-key-here"
+   export CODE_HOOK_SERVICE="openrouter"
+   ```
+3. **That's it!** No local installation required.
+
+### Option 2: LM Studio (Local, Private)
+1. **Install LM Studio**: Download from https://lmstudio.ai/
+2. **Download a model**: Any coding model (e.g., `nousresearch/hermes-4-70b`)
+3. **Start local server**: Start LM Studio's server (typically port 1234)
+4. **Set environment variable**:
+   ```bash
+   export CODE_HOOK_SERVICE="lm_studio"
+   ```
+
+### Option 3: Ollama (Local, Open Source)
+1. **Install Ollama**: From https://ollama.ai
+2. **Pull a model**:
    ```bash
    ollama pull codellama
    ```
-
-### Option 2: LM Studio
-1. **LM Studio installed and running**: Download from https://lmstudio.ai/
-2. **Model downloaded**: Download the model `mradermacher/gpt-oss-6.0b-specialized-all-pruned-moe-only-7-experts-GGUF`
-3. **Local server running**: Start LM Studio's local server (typically on port 1234)
+3. **Set environment variable**:
+   ```bash
+   export CODE_HOOK_SERVICE="ollama"
+   ```
 
 ## Setup
 
@@ -60,24 +79,26 @@ Replace `/path/to/code_suggestions_hook.py` with the actual path to your hook sc
 
 ### 3. Configure Environment Variables
 
-Add the following to your `~/.bashrc`, `~/.zshrc`, or equivalent shell configuration:
+Add the following to your `~/.bashrc`, `~/.zshrc`, or equivalent shell configuration.
+
+**You only need the variables for your chosen backend!**
 
 ```bash
-# OpenRouter API (for code_suggestions_hook.py using OpenRouter)
-export OPENROUTER_API_KEY="your-api-key-here"
-export OPENROUTER_MODEL="x-ai/grok-code-fast-1"  # Optional, has default
-
-# LM Studio (for local models)
-export LM_STUDIO_HOST="http://localhost:1234"  # Optional, defaults to localhost:1234
-export LM_STUDIO_MODEL="nousresearch/hermes-4-70b"  # Optional, has default
-export SWALLOWMAID_MODEL="swallowmaid-8b-l3-sppo-abliterated@q8_0"  # For sexy_code_hook.py
-
-# Ollama (alternative to LM Studio)
-export OLLAMA_HOST="http://localhost:11434"  # Optional, has default
-export OLLAMA_MODEL="codellama:7b"  # Optional, has default
-
-# Service Selection (which backend to use)
+# Service Selection (REQUIRED - choose your backend)
 export CODE_HOOK_SERVICE="openrouter"  # Options: openrouter, lm_studio, ollama
+
+# === OpenRouter (if using OpenRouter) ===
+export OPENROUTER_API_KEY="your-api-key-here"  # REQUIRED for OpenRouter
+export OPENROUTER_MODEL="x-ai/grok-code-fast-1"  # Optional, defaults to Grok
+
+# === LM Studio (if using LM Studio) ===
+export LM_STUDIO_HOST="http://localhost:1234"  # Optional, defaults to localhost:1234
+export LM_STUDIO_MODEL="nousresearch/hermes-4-70b"  # Optional
+export SWALLOWMAID_MODEL="swallowmaid-8b-l3-sppo-abliterated@q8_0"  # For sexy hook
+
+# === Ollama (if using Ollama) ===
+export OLLAMA_HOST="http://localhost:11434"  # Optional, defaults to localhost:11434
+export OLLAMA_MODEL="codellama:7b"  # Optional
 ```
 
 After adding these, reload your shell:
@@ -85,7 +106,7 @@ After adding these, reload your shell:
 source ~/.bashrc  # or ~/.zshrc
 ```
 
-**Get your OpenRouter API key**: https://openrouter.ai/keys
+**Get your OpenRouter API key**: https://openrouter.ai/keys (free tier available!)
 
 ### 4. Test the Hook
 
