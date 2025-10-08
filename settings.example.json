@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/aidata/HookedOnCode/code_suggestions_hook.py",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

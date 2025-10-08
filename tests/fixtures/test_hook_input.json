@@ -1,0 +1,8 @@
+{
+    "tool_name": "Write",
+    "tool_input": {
+        "file_path": "/tmp/test.py",
+        "content": "def add(a, b):\n    return a + b\n\nresult = add(5, 3)\nprint(result)"
+    },
+    "tool_response": {"success": true}
+}

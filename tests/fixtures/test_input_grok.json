@@ -1,0 +1,8 @@
+{
+    "tool_name": "Write",
+    "tool_input": {
+        "file_path": "/tmp/vulnerable.py",
+        "content": "import os\nimport pickle\n\ndef unsafe_load(file):\n    with open(file, 'rb') as f:\n        return pickle.load(f)\n\ndef run_command(user_input):\n    os.system(f'echo {user_input}')"
+    },
+    "tool_response": {"success": true}
+}
